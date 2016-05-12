@@ -30,10 +30,10 @@ clean:
 	find . -name '*~' -exec rm -f {}
 
 lint:
-	flake8 mypackage > violations.flake8.txt
+	flake8 insynsregistret > violations.flake8.txt
 
 test:
-	nosetests
+	/usr/local/bin/nosetests
 
 release: register
 	python setup.py sdist upload
