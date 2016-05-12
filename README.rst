@@ -1,4 +1,4 @@
-==============
+===============
 Ingynsregistret
 ===============
 .. image:: https://badge.fury.io/py/insynsregistret.png
