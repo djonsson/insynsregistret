@@ -32,3 +32,6 @@ docs/_build
 # Virtual environments
 env
 env*
+
+# IntelliJ
+.idea
