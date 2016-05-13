@@ -29,10 +29,6 @@ clean:
 	find . -name '*.pyo' -exec rm -f {} \
 	find . -name '*~' -exec rm -f {}
 
-install:
-	make deps
-	make test
-
 lint:
 	flake8 insynsregistret > violations.flake8.txt
 
