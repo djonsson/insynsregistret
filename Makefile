@@ -20,7 +20,7 @@ env:
 	make deps
 
 deps:
-	pip install -r requirements.txt --use-mirrors
+	pip install -r requirements.txt
 
 clean:
 	rm -fr build \
@@ -29,11 +29,15 @@ clean:
 	find . -name '*.pyo' -exec rm -f {} \
 	find . -name '*~' -exec rm -f {}
 
+install:
+	make deps
+	make test
+
 lint:
 	flake8 insynsregistret > violations.flake8.txt
 
 test:
-	/usr/local/bin/nosetests
+	/usr/local/bin/nosetests --nocapture
 
 release: register
 	python setup.py sdist upload

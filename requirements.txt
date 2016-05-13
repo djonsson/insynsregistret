@@ -7,4 +7,4 @@ nose
 coverage
 flake8
 sphinx
-
+beautifulsoup4
