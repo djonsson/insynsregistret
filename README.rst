@@ -1,5 +1,5 @@
 ===============
-Ingynsregistret
+Insynsregistret
 ===============
 .. image:: https://badge.fury.io/py/insynsregistret.png
     :target: http://badge.fury.io/py/insynsregistret
