@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from bs4 import BeautifulSoup
+from cache import Cache
 import zipfile
 import StringIO
 import requests
@@ -35,7 +36,8 @@ class Session(object):
     """
 
     DEFAULT_SETTINGS = {
-        'url': 'http://insynsok.fi.se/SearchPage.aspx'
+        'url': 'http://insynsok.fi.se/SearchPage.aspx',
+        'cache_directory': '~/.cache-insyn/'
     }
 
     ASP_NET_FIELDS = {}
@@ -43,6 +45,7 @@ class Session(object):
     def __init__(self):
         self.session = requests.Session()
         self.__event_validation__()
+        self.cache = Cache(self.DEFAULT_SETTINGS)
 
     def __event_validation__(self):
         get_response = self.session.get(self.DEFAULT_SETTINGS['url'])
@@ -63,9 +66,17 @@ class Session(object):
                 'ctl00$main$tomDate':           to_date
                 }
 
-    def get(self, from_date='2016-01-02', to_date='2016-05-12'):
+    def get(self, from_date, to_date):
+        generated_filename = self.cache.get_expected_filename_of_xml(from_date, to_date)
+        if not self.cache.file_exist(generated_filename):
+            z = self.download_zip_file(from_date, to_date)
+            z.extractall(path=self.cache.get_cache_directory())
+            namelist = z.namelist()
+            if self.cache.transaction_filename_xml(from_date, to_date) not in namelist:
+                print(namelist)
+                raise IOError('Expected to find "%s" in archive but it was not there.' % generated_filename)
+        return open(generated_filename).read()
+
+    def download_zip_file(self, from_date, to_date):
         response = self.session.post(self.DEFAULT_SETTINGS['url'], data=self.__payload__(from_date, to_date))
-        z = zipfile.ZipFile(StringIO.StringIO(response.content))
-        for file in z.namelist():
-            print(file)
-        z.extractall()
+        return zipfile.ZipFile(StringIO.StringIO(response.content))
