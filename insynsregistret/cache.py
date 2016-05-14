@@ -3,6 +3,7 @@
 
 import errno
 import os
+import shutil
 
 
 class Cache(object):
@@ -13,7 +14,10 @@ class Cache(object):
     """
     __directory__ = None
 
-    def __init__(self, cache_directory):
+    def __init__(self, cache_directory=None):
+        if cache_directory is None:
+            cache_directory = {'cache_directory': '~/.cache-insyn/'}
+
         self.__directory__ = os.path.expanduser(cache_directory['cache_directory'])
         self.mkdir_p(self.__directory__)
 
@@ -30,6 +34,12 @@ class Cache(object):
     @staticmethod
     def file_exist(path):
         return os.path.isfile(path)
+
+    def list_cache_files(self):
+        return os.listdir(self.__directory__)
+
+    def purge_cache(self):
+        return shutil.rmtree(self.__directory__)
 
     @staticmethod
     def is_empty(path):
