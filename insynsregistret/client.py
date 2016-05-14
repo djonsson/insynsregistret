@@ -71,10 +71,14 @@ class Session(object):
         if not self.cache.file_exist(generated_filename):
             z = self.download_zip_file(from_date, to_date)
             z.extractall(path=self.cache.get_cache_directory())
+
             namelist = z.namelist()
-            if self.cache.transaction_filename_xml(from_date, to_date) not in namelist:
+            if self.cache.filename_xml(from_date, to_date) not in namelist:
                 print(namelist)
                 raise IOError('Expected to find "%s" in archive but it was not there.' % generated_filename)
+
+        if self.cache.is_empty(generated_filename):
+            return None
         return open(generated_filename).read()
 
     def download_zip_file(self, from_date, to_date):

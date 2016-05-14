@@ -1,3 +1,6 @@
+#! ../env/bin/python
+# -*- coding: utf-8 -*-
+
 import errno
 import os
 
@@ -18,15 +21,23 @@ class Cache(object):
         return self.__directory__
 
     def get_expected_filename_of_xml(self, fromdate, todate):
-        return self.get_cache_directory() + self.transaction_filename_xml(fromdate, todate)
+        return self.get_cache_directory() + self.filename_xml(fromdate, todate)
 
     @staticmethod
-    def transaction_filename_xml(fromdate, todate):
+    def filename_xml(fromdate, todate):
         return '_Transaktioner_%s_%s__(sv-SE).xml' % (fromdate, todate)
 
     @staticmethod
     def file_exist(path):
         return os.path.isfile(path)
+
+    @staticmethod
+    def is_empty(path):
+        # On dates without inside trades we receive a xml file containing no interesting data.
+        # This file is always 53 bytes.
+        if os.path.getsize(path) == 53:
+            return True
+        return False
 
     @staticmethod
     def mkdir_p(path):

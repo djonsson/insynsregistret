@@ -33,7 +33,7 @@ lint:
 	flake8 insynsregistret > violations.flake8.txt
 
 test:
-	/usr/local/bin/nosetests --nocapture
+	/usr/local/bin/nosetests --with-coverage --cover-erase --cover-package=insynsregistret --nocapture
 
 release: register
 	python setup.py sdist upload
