@@ -32,6 +32,9 @@ clean:
 lint:
 	flake8 insynsregistret > violations.flake8.txt
 
+cache:
+	open ~/.cache-insyn/
+
 test:
 	/usr/local/bin/nosetests --with-coverage --cover-erase --cover-package=insynsregistret --nocapture
 

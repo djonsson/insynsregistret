@@ -24,13 +24,6 @@ class Cache(object):
     def get_cache_directory(self):
         return self.__directory__
 
-    def get_expected_filename_of_xml(self, fromdate, todate):
-        return self.get_cache_directory() + self.filename_xml(fromdate, todate)
-
-    @staticmethod
-    def filename_xml(fromdate, todate):
-        return '_Transaktioner_%s_%s__(sv-SE).xml' % (fromdate, todate)
-
     @staticmethod
     def file_exist(path):
         return os.path.isfile(path)
