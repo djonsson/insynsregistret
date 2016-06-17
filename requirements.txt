@@ -6,5 +6,6 @@ requests
 nose
 coverage
 flake8
-sphinx
 beautifulsoup4
+lxml
+cssselect
