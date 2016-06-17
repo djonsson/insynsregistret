@@ -7,6 +7,15 @@ Insynsregistret
 .. image:: https://travis-ci.org/djonsson/insynsregistret.png?branch=master
     :target: https://travis-ci.org/djonsson/insynsregistret
 
+Introduction
+------------
+`Insynsregistret <http://insynsok.fi.se>`_  is a Swedish financial registry maintained by the `Swedish Finansinspektionen <http://www.fi.se>`_ (FI). It contains
+information regarding insider trading on the Stockholm Stock Exchange (OMX) which is the largest financial market in Sweden.
+
+All insider trading is reported to FI, which publishes the data to this public database. This python library makes it easier to automate data extraction from Insynsregistret.
+
+Please note that this library currently is under development. See the tests for usage instructions.
+
 Usage
 -----
 ::
@@ -32,6 +41,4 @@ Usage
 
 License
 -------
-
 Insynsregistret is BSD licensed, so feel free to use it as you like.
-

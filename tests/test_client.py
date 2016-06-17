@@ -3,7 +3,7 @@
 import unittest
 import sys
 
-from insynsregistret.client import Client
+from insynsregistret.client import Client, Company
 from insynsregistret.cache import Cache
 from nose.tools import assert_is_none, assert_is_not_none, assert_raises
 
@@ -20,7 +20,6 @@ class Tests(unittest.TestCase):
     def test_list_cache_files(self):
         Cache().purge_cache()
         Cache().list_cache_files()
-        pass
 
     @unittest.skipIf(sys.platform.startswith('win'), 'Only on nix')
     def test_making_invalid_dir(self):
@@ -67,10 +66,15 @@ class Tests(unittest.TestCase):
         self.client.get_company_insider_position_changes(ssab)
 
     def test_search_results_several(self):
-        self.client.search_company(company_name='co')
+        result = self.client.search_company(company_name='co')
 
     def test_search_results_no_hits(self):
         self.client.search_company(company_name='this-search-will-not-return-any-hits')
+
+    def test_company_get_current_insider(self):
+        xml = Company(company_name='volvo').get_current_holdings()
+        for table in xml.findall('Table'):
+            print table.find('Person').text
 
 if __name__ == '__main__':
     unittest.main()

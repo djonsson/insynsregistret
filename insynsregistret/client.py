@@ -9,26 +9,28 @@ import xml.etree.ElementTree as ET
 
 
 class Client(object):
-
-    __DEFAULT_SETTINGS = {
+    __default_settings = {
         'cache_directory': '~/.cache-insyn/'
     }
 
-    __BASE_URL = 'http://insynsok.fi.se'
+    __base_url = 'http://insynsok.fi.se'
+    __params = {'culture': 'en-GB'}
 
     def __init__(self):
         self.__session = requests.Session()
-        self.__cache = Cache(self.__DEFAULT_SETTINGS)
+        self.__cache = Cache(self.__default_settings)
         self.__cache_dir = self.__cache.get_cache_directory()
 
     def search_transactions(self, from_date, to_date):
-        url = self.__BASE_URL + '/SearchPage.aspx'
-        filename = self.__cache_dir + ('_Transaktioner_%s_%s__(sv-SE).xml' % (from_date, to_date))
+        url = self.__base_url + '/SearchPage.aspx'
+        filename = self.__cache_dir + (
+        '_Transaktioner_%s_%s__(%s).xml' % (from_date, to_date, self.__params.get('culture')))
         e, v = self.__get_request_to_setup_asp_fields(url)
 
         if not self.__cache.file_exist(filename):
-            response = self.__session.post(url, data=self.__request_payload(e, v, drop_down='Transaktioner',
-                                                                            from_date=from_date, to_date=to_date))
+            response = self.__session.post(url, params=self.__params,
+                                           data=self.__request_payload(e, v, drop_down='Transaktioner',
+                                                                       from_date=from_date, to_date=to_date))
             z = zipfile.ZipFile(StringIO.StringIO(response.content))
             z.extractall(path=self.__cache_dir)
         if self.__cache.is_empty(filename):
@@ -36,11 +38,12 @@ class Client(object):
         return ET.parse(filename).getroot()
 
     def search_insiders(self, from_date, to_date):
-        url = self.__BASE_URL + '/SearchPage.aspx'
-        filename = self.__cache_dir + '_Insyn__(sv-SE).xml'
+        url = self.__base_url + '/SearchPage.aspx'
+        filename = self.__cache_dir + '_Insyn__(%s).xml' % self.__params.get('culture')
         e, v = self.__get_request_to_setup_asp_fields(url)
-        response = self.__session.post(url, data=self.__request_payload(e, v, drop_down='Insyn', from_date=from_date,
-                                                                        to_date=to_date))
+        response = self.__session.post(url, params=self.__params,
+                                       data=self.__request_payload(e, v, drop_down='Insyn', from_date=from_date,
+                                                                   to_date=to_date))
 
         z = zipfile.ZipFile(StringIO.StringIO(response.content))
         z.extractall(path=self.__cache_dir)
@@ -49,9 +52,10 @@ class Client(object):
     def search_company(self, company_name=None, org_number=None):
         search_term = ''.join(filter(None, (company_name, org_number)))
 
-        url = self.__BASE_URL + '/Startpage.aspx?searchtype=0&culture=sv-SE'
-        response = self.__session.post(url, data=self.__search_payload(url, company_name=company_name,
-                                                                       org_number=org_number))
+        url = self.__base_url + '/Startpage.aspx?searchtype=0'
+        response = self.__session.post(url, params=self.__params,
+                                       data=self.__search_payload(url, company_name=company_name,
+                                                                  org_number=org_number))
         e, v = self.__get_asp_fields_from_response(response)
         search_result = {'search term': search_term, 'asp_fields': {'e': e, 'v': v}, 'response': response}
 
@@ -77,32 +81,35 @@ class Client(object):
         response = self.__session.post(response.url, data=self.__request_payload(e, v, drop_down='Transaktioner',
                                                                                  from_date=from_date,
                                                                                  to_date=to_date))
-        z = zipfile.ZipFile(StringIO.StringIO(response.content))
-        z.extractall(path=self.__cache_dir)
+        return self.__xml_response_from_file(response)
 
     def get_company_insider_current_holdings(self, company):
         e, v, response = self.__get_company_asp_fields(company)
         response = self.__session.post(response.url, data=self.__request_payload(e, v, drop_down='Innehav'))
-        z = zipfile.ZipFile(StringIO.StringIO(response.content))
-        z.extractall(path=self.__cache_dir)
+        return self.__xml_response_from_file(response)
 
     def get_company_insider_historical_holdings(self, company):
         e, v, response = self.__get_company_asp_fields(company)
         response = self.__session.post(response.url, data=self.__request_payload(e, v, drop_down='HistorisktInnehav'))
-        z = zipfile.ZipFile(StringIO.StringIO(response.content))
-        z.extractall(path=self.__cache_dir)
+        return self.__xml_response_from_file(response)
 
     def get_company_insiders_people(self, company):
         e, v, response = self.__get_company_asp_fields(company)
         response = self.__session.post(response.url, data=self.__request_payload(e, v, drop_down='Insyn'))
-        z = zipfile.ZipFile(StringIO.StringIO(response.content))
-        z.extractall(path=self.__cache_dir)
+        return self.__xml_response_from_file(response)
 
     def get_company_insider_position_changes(self, company):
         e, v, response = self.__get_company_asp_fields(company)
-        response = self.__session.post(response.url, data=self.__request_payload(e, v, drop_down='Befattningsforandringar'))
+        response = self.__session.post(response.url,
+                                       data=self.__request_payload(e, v, drop_down='Befattningsforandringar'))
+        return self.__xml_response_from_file(response)
+
+    def __xml_response_from_file(self, response):
         z = zipfile.ZipFile(StringIO.StringIO(response.content))
         z.extractall(path=self.__cache_dir)
+        for name in z.namelist():
+            if '.xml' in name:
+                return ET.parse(self.__cache_dir + name)
 
     @staticmethod
     def __get_company_asp_fields(company):
@@ -148,3 +155,23 @@ class Client(object):
             'ctl00$main$btnSeekkBolag.y': '5',
         }
 
+
+class Company(Client):
+    def __init__(self, company_name=None, org_number=None):
+        super(Company, self).__init__()
+        self.company = self.search_company(company_name, org_number)
+
+    def get_current_holdings(self):
+        return self.get_company_insider_current_holdings(self.company)
+
+    def get_current_insiders(self):
+        return self.get_company_insiders_people(self.company)
+
+    def get_historical_transactions(self, from_date, to_date):
+        return self.get_company_transactions(self.company, from_date, to_date)
+
+    def get_historical_holdings(self):
+        return self.get_company_insider_historical_holdings(self.company)
+
+    def get_historical_position_changes(self):
+        return self.get_company_insider_position_changes(self.company)
