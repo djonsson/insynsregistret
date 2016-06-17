@@ -33,7 +33,7 @@ class Tests(unittest.TestCase):
         date_xml = Client().search_transactions(from_date='2015-11-18', to_date='2015-12-18')
         for i, table in enumerate(date_xml):
             for data in table:
-                print data.tag, data.text
+                print(data.tag, data.text)
             if i == 0:
                 break
         assert_is_not_none(date_xml)
