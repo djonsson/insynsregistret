@@ -1,7 +1,7 @@
 #! ../env/bin/python
 # -*- coding: utf-8 -*-
 from bs4 import BeautifulSoup
-from cache import Cache
+import clientcache
 import zipfile
 import StringIO
 import requests
@@ -18,7 +18,7 @@ class Client(object):
 
     def __init__(self):
         self.__session = requests.Session()
-        self.__cache = Cache(self.__default_settings)
+        self.__cache = clientcache.Cache(self.__default_settings)
         self.__cache_dir = self.__cache.get_cache_directory()
 
     def search_transactions(self, from_date, to_date):

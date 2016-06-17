@@ -3,8 +3,8 @@
 import unittest
 import sys
 
+from insynsregistret import clientcache
 from insynsregistret.client import Client, Company
-from insynsregistret.cache import Cache
 from nose.tools import assert_is_none, assert_is_not_none, assert_raises
 
 
@@ -18,13 +18,13 @@ class Tests(unittest.TestCase):
         assert_is_none(self.client.search_transactions(from_date='1901-05-12', to_date='1901-05-15'))
 
     def test_list_cache_files(self):
-        Cache().purge_cache()
-        Cache().list_cache_files()
+        clientcache.Cache().purge_cache()
+        clientcache.Cache().list_cache_files()
 
     @unittest.skipIf(sys.platform.startswith('win'), 'Only on nix')
     def test_making_invalid_dir(self):
         with assert_raises(OSError):
-            Cache().mkdir_p('/')
+            clientcache.Cache().mkdir_p('/')
 
     def test_get_insiders_for_date_range(self):
         self.client.search_insiders('2015-11-18', '2015-12-18')
