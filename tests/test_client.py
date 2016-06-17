@@ -74,7 +74,7 @@ class Tests(unittest.TestCase):
     def test_company_get_current_insider(self):
         xml = Company(company_name='volvo').get_current_holdings()
         for table in xml.findall('Table'):
-            print table.find('Person').text
+            print (table.find('Person').text)
 
 if __name__ == '__main__':
     unittest.main()
