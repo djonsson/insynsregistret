@@ -3,7 +3,7 @@
 import unittest
 import sys
 
-from insynsregistret.client import Session
+from insynsregistret.client import Session, Company
 from insynsregistret.cache import Cache
 from nose.tools import assert_is_none, assert_is_not_none, assert_raises
 
@@ -42,8 +42,16 @@ def test_company_search_by_name():
     Session().search_company(company_name='tobii')
 
 
-def test_company_search_by_org_no():
-    Session().search_company(org_number='556012-5790')
+def test_get_transactions_for_volvo():
+    insynsok = Session()
+    volvo = insynsok.search_company(company_name='volvo')
+    insynsok.get_company_transactions(volvo, '2015-11-18', '2015-12-18')
+
+
+def test_get_transactions_for_lucara_by_org_number():
+    insynsok = Session()
+    lucara = insynsok.search_company(org_number='556880-1277')
+    insynsok.get_company_transactions(lucara, '2015-11-18', '2015-12-18')
 
 
 def test_get_several_search_results():
@@ -53,3 +61,7 @@ def test_get_several_search_results():
 def test_get_no_companies():
     Session().search_company(company_name='this-search-will-not-return-any-hits')
 
+
+#def test_company():
+#    volvo = Company('volvo')
+#    volvo.get_company_transactions()
