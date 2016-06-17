@@ -29,17 +29,6 @@ Usage
       release     package and upload a release
       sdist       package
 
-Setup Notes
------------
-
-* In order to be able to generate PDF and PS files from reStructuredText using LaTeX on Debian-based systems you need to install the following software:
-
-    ``sudo apt-get install wget build-essential python2.5-dev texlive-full``
-
-* Use `webhooks`_ to update docs at `Read The Docs`_ whenever you make a commit to your project.
-
-.. _webhooks: https://read-the-docs.readthedocs.org/en/latest/webhooks.html
-.. _Read The Docs: https://readthedocs.org/
 
 License
 -------
