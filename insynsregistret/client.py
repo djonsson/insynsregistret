@@ -8,7 +8,7 @@ import requests
 import xml.etree.ElementTree as ET
 
 
-class Session(object):
+class Client(object):
 
     __DEFAULT_SETTINGS = {
         'cache_directory': '~/.cache-insyn/'
