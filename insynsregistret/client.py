@@ -7,7 +7,7 @@ import zipfile
 try:
     from StringIO import StringIO
 except ImportError:
-    from io import StringIO
+    from io import BytesIO
 
 import requests
 import xml.etree.ElementTree as ET
