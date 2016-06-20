@@ -5,10 +5,6 @@ Insynsregistret
 .. image:: https://travis-ci.org/djonsson/insynsregistret.svg?branch=master
     :target: https://travis-ci.org/djonsson/insynsregistret
 
-
-.. image:: https://codecov.io/gh/djonsson/insynsregistret/branch/master/graph/badge.svg
-    :target: https://codecov.io/gh/djonsson/insynsregistret
-
 Introduction
 ------------
 `Insynsregistret <http://insynsok.fi.se>`_  is a Swedish financial registry maintained by the `Swedish Finansinspektionen <http://www.fi.se>`_ (FI). It contains
