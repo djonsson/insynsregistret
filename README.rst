@@ -22,15 +22,22 @@ Please note that this library currently is under development. See the tests for 
 
 Usage
 -----
+For most users, the recommended method to install is via pip:
 ::
 
-    #Sets up environment and installs dependencies
+    $ pip install insynsregistret
+
+Development
+-----------
+::
+
+    # Sets up environment and installs dependencies
     $ make env
 
-    #Activate the environment
+    # Activate the environment
     $ . env/bin/activate
 
-    #Shows the list of commands available
+    # Shows the list of commands available
     $ make help
 
       env         create a development environment using virtualenv
@@ -46,3 +53,4 @@ Usage
 License
 -------
 Insynsregistret is BSD licensed, so feel free to use it as you like.
+
