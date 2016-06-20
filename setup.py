@@ -28,7 +28,6 @@ setup(
     install_requires=[''],
     packages=['insynsregistret'],
     include_package_data=True,
-    scripts=[''],
     classifiers=(
         'Development Status :: 5 - Production/Stable',
         'Intended Audience :: Developers',
