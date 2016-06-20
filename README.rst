@@ -2,7 +2,7 @@
 Insynsregistret
 ===============
 
-.. image:: https://travis-ci.org/djonsson/insynsregistret.svg?branch=master
+.. image:: https://api.travis-ci.org/djonsson/insynsregistret.svg?branch=master
     :target: https://travis-ci.org/djonsson/insynsregistret
 
 Introduction
