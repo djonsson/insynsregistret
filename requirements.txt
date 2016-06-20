@@ -9,3 +9,4 @@ flake8
 beautifulsoup4
 lxml
 cssselect
+codecov
