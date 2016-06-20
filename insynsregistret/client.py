@@ -36,7 +36,7 @@ class Client(object):
             response = self.__session.post(url, params=self.__params,
                                            data=self.__request_payload(e, v, drop_down='Transaktioner',
                                                                        from_date=from_date, to_date=to_date))
-            z = zipfile.ZipFile(StringIO.StringIO(response.content))
+            z = zipfile.ZipFile(StringIO(response.content))
             z.extractall(path=self.__cache_dir)
         if self.__cache.is_empty(filename):
             return None
@@ -50,7 +50,7 @@ class Client(object):
                                        data=self.__request_payload(e, v, drop_down='Insyn', from_date=from_date,
                                                                    to_date=to_date))
 
-        z = zipfile.ZipFile(StringIO.StringIO(response.content))
+        z = zipfile.ZipFile(StringIO(response.content))
         z.extractall(path=self.__cache_dir)
         return ET.parse(filename).getroot()
 
@@ -110,7 +110,7 @@ class Client(object):
         return self.__xml_response_from_file(response)
 
     def __xml_response_from_file(self, response):
-        z = zipfile.ZipFile(StringIO.StringIO(response.content))
+        z = zipfile.ZipFile(StringIO(response.content))
         z.extractall(path=self.__cache_dir)
         for name in z.namelist():
             if '.xml' in name:
