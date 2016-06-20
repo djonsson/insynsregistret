@@ -1,7 +1,6 @@
 #! ../env/bin/python
 # -*- coding: utf-8 -*-
 import unittest
-import sys
 
 from insynsregistret import clientcache
 from insynsregistret.client import Client, Company
@@ -21,7 +20,7 @@ class Tests(unittest.TestCase):
         clientcache.Cache().purge_cache()
         clientcache.Cache().list_cache_files()
 
-    @unittest.skipIf(sys.platform.startswith('win'), 'Only on nix')
+    @unittest.skip("Does not raise an OSError in Travis")
     def test_making_invalid_dir(self):
         with assert_raises(OSError):
             clientcache.Cache().mkdir_p('/')
