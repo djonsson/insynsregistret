@@ -3,7 +3,12 @@
 from bs4 import BeautifulSoup
 from . import clientcache
 import zipfile
-import StringIO
+
+try:
+    from StringIO import StringIO
+except ImportError:
+    from io import StringIO
+
 import requests
 import xml.etree.ElementTree as ET
 
