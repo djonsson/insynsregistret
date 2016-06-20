@@ -26,7 +26,7 @@ setup(
     author_email='wd.jonsson@gmail.com',
     url='https://github.com/djonsson/insynsregistret',
     install_requires=[''],
-    packages=[],
+    packages=['insynsregistret'],
     include_package_data=True,
     scripts=[''],
     classifiers=(
@@ -35,11 +35,10 @@ setup(
         'Natural Language :: English',
         'License :: OSI Approved :: MIT License',
         'Programming Language :: Python',
-        'Programming Language :: Python :: 2.6',
         'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3.3',
     ),
-    keywords='python, project, project template, bootstrap',
+    keywords='insynsregustret, insider trading, finansinspektionen, omx',
     tests_require=['nose'],
     test_suite='tests',
 )

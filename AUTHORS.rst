@@ -1,7 +1,0 @@
-=======
-Credits
-=======
-
-Contributors
-------------
-* Daniel Jonsson
