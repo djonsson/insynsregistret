@@ -1,7 +1,7 @@
 #! ../env/bin/python
 # -*- coding: utf-8 -*-
 from bs4 import BeautifulSoup
-import clientcache
+from . import clientcache
 import zipfile
 import StringIO
 import requests
