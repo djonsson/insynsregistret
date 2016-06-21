@@ -11,6 +11,12 @@ Insynsregistret
 .. image:: https://badge.fury.io/py/insynsregistret.svg
     :target: https://badge.fury.io/py/insynsregistret
 
+.. image:: https://img.shields.io/pypi/pyversions/insynsregistret.svg?maxAge=2590000
+    :target: https://badge.fury.io/py/insynsregistret
+
+.. image:: https://img.shields.io/pypi/l/insynsregistret.svg?maxAge=2590000
+    :target: https://badge.fury.io/py/insynsregistret
+
 Introduction
 ------------
 `Insynsregistret <http://insynsok.fi.se>`_  is a Swedish financial registry maintained by the `Swedish Finansinspektionen <http://www.fi.se>`_ (FI). It contains

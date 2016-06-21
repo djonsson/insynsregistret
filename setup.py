@@ -14,14 +14,13 @@ if sys.argv[-1] == 'publish':
     sys.exit()
 
 README = open('README.rst').read()
-LICENSE = open("LICENSE").read()
 
 setup(
     name='insynsregistret',
     version=insynsregistret.__version__,
     description='A client for the Swedish insynsregistret',
     long_description=(README),
-    license=LICENSE,
+    license='BSD',
     author='Daniel Jonsson',
     author_email='wd.jonsson@gmail.com',
     url='https://github.com/djonsson/insynsregistret',
