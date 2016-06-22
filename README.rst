@@ -8,6 +8,9 @@ Insynsregistret
 .. image:: https://codecov.io/gh/djonsson/insynsregistret/branch/master/graph/badge.svg
     :target: https://codecov.io/gh/djonsson/insynsregistret
 
+.. image:: https://codeclimate.com/github/djonsson/insynsregistret/badges/gpa.svg
+    :target: https://codeclimate.com/github/djonsson/insynsregistret
+
 .. image:: https://badge.fury.io/py/insynsregistret.svg
     :target: https://badge.fury.io/py/insynsregistret
 
